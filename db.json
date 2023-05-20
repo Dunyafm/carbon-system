@@ -1,0 +1,53 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "firstname": "Dunya",
+      "lastmame": "Mammadli",
+      "email": "dunyamamadli@gmail.com",
+      "age": "23",
+      "companyId": "1"
+    },
+    {
+      "id": "2",
+      "firstname": "Alsu",
+      "lastmame": "Musayeva",
+      "email": "aslumuasyeva@gmail.com",
+      "age": "22",
+      "companyId": "2"
+    },
+    {
+      "id": "3",
+      "firstname": "Zəfər",
+      "lastmame": "Muradli",
+      "email": "muradli@gmail.com",
+      "age": "25",
+      "companyId": "3"
+    },
+    {
+      "firstName": "Dunya",
+      "lastName": "Mammadli",
+      "age": "23",
+      "email": "dunyamamadli@gmail.com",
+      "companyId": "3",
+      "id": "kFOecu6"
+    }
+  ],
+  "companies": [
+    {
+      "id": "1",
+      "name": "Digital hands",
+      "description": "Full Stack kursu"
+    },
+    {
+      "id": "2",
+      "name": "Digital hands",
+      "description": "Frontend kursu"
+    },
+    {
+      "id": "3",
+      "name": "Digital hands",
+      "description": "Backend kursu"
+    }
+  ]
+}
