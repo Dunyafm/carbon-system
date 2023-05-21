@@ -1,73 +1,163 @@
-angular.module('modalTest',['ui.bootstrap','dialogs'])
-.controller('dialogServiceTest',function($scope,$rootScope,$timeout,$dialogs){
-  $scope.confirmed = 'You have yet to be confirmed!';
-  $scope.name = '"Your name here."';
-  
-  $scope.launch = function(which){
-    var dlg = null;
-    switch(which){
-  
-      case 'confirm':
-        dlg = $dialogs.confirm('Please Confirm','Is this awesome or what?');
-        dlg.result.then(function(btn){
-          $scope.confirmed = 'You thought this quite awesome!';
-        },function(btn){
-          $scope.confirmed = 'Shame on you for not thinking this is awesome!';
-        });
-        break;
-       
-   
-      case 'create':
-        dlg = $dialogs.create('/dialogs/whatsyourname.html','whatsYourNameCtrl',{},{key: false,back: 'static'});
-        dlg.result.then(function(name){
-          $scope.name = name;
-        },function(){
-          $scope.name = 'You decided not to enter in your name, that makes me sad.';
-        });
-        
-        break;
-    }; 
-  };
-  
- 
-  var progress = 25;
-  var msgs = [
-    'Hey! I\'m waiting here...',
-    'About half way done...',
-    'Almost there?',
-    'Woo Hoo! I made it!'
-  ];
-  var i = 0;
-  
-  var fakeProgress = function(){
-    $timeout(function(){
-      if(progress < 100){
-        progress += 25;
-        $rootScope.$broadcast('dialogs.wait.progress',{msg: msgs[i++],'progress': progress});
-        fakeProgress();
-      }else{
-        $rootScope.$broadcast('dialogs.wait.complete');
-      }
-    },1000);
-  };
-  
-})
-.controller('whatsYourNameCtrl',function($scope,$modalInstance,data){
-  $scope.user = {name : ''};
+function drag(ev) {
+  ev.dataTransfer.setData("text", ev.target.id);
+}
 
-  $scope.cancel = function(){
-    $modalInstance.dismiss('canceled');  
-  }; 
+function allowDrop(ev) {
+  ev.preventDefault();
+}
+
+function drop(ev) {
+  ev.preventDefault();
+  var data = ev.dataTransfer.getData("text");
+  ev.currentTarget.appendChild(document.getElementById(data));
+}
+
+function createTask(){
+  var x = document.getElementById("inprogress");
+  var y = document.getElementById("done");
+  var z = document.getElementById("create-new-task-block");
+  if (x.style.display === "none") {
+      x.style.display = "block";
+      y.style.display = "block";
+      z.style.display = "none";
+  } else {
+      x.style.display = "none";
+      y.style.display = "none";
+      z.style.display = "flex";
+  }
+}
+const searchInput = document.getElementById("searchInput");
+const taskList = document.getElementById("taskList");
+
+searchInput.addEventListener("input", function() {
+  const searchTerm = searchInput.value.toLowerCase();
+  const tasks = taskList.getElementsByTagName("li");
+
+  for (let i = 0; i < tasks.length; i++) {
+    const task = tasks[i];
+    const taskText = task.textContent.toLowerCase();
+
+    if (taskText.includes(searchTerm)) {
+      task.style.display = "block";
+    } else {
+      task.style.display = "none";
+    }
+  }
+});
+function uploadMember(event) {
+  event.preventDefault(); // Formun varsayılan davranışını engelle
   
-  $scope.save = function(){
-    $modalInstance.close($scope.user.name);
-  }; 
+  var name = document.getElementById("name").value;
+  var photo = document.getElementById("photo").files[0];
   
-  $scope.hitEnter = function(evt){
-    if(angular.equals(evt.keyCode,13) && !(angular.equals($scope.name,null) || angular.equals($scope.name,'')))
-				$scope.save();
+  // Adı kaydet veya başka bir işlem yap
+  
+  // Fotoğrafı önizleme div'ine yükle
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    var imagePreview = document.getElementById("imagePreview");
+    imagePreview.innerHTML = "<img src='" + e.target.result + "' alt='Üzv şəkili'>";
   };
-}) 
-.run(['$templateCache',function($templateCache){
-  $templateCache.put('/dialogs/whatsyourname.html','<div class="modal"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><h4 class="modal-title"><span class="glyphicon glyphicon-star"></span> User\'s Name</h4></div><div class="modal-body"><ng-form name="nameDialog" novalidate role="form"><div class="form-group input-group-lg" ng-class="{true: \'has-error\'}[nameDialog.username.$dirty && nameDialog.username.$invalid]"><label class="control-label" for="username">Name:</label><input type="text" class="form-control" name="username" id="username" ng-model="user.name" ng-keyup="hitEnter($event)" required><span class="help-block">Enter your full name, first &amp; last.</span></div></ng-form></div><div class="modal-footer"><button type="button" class="btn btn-default" ng-click="cancel()">Cancel</button><button type="button" class="btn btn-primary" ng-click="save()" ng-disabled="(nameDialog.$dirty && nameDialog.$invalid) || nameDialog.$pristine">Save</button></div></div></div></div>');
-}]); 
+  reader.readAsDataURL(photo);
+}
+
+
+function saveTask(){
+  // var saveButton = document.getElementById("save-button");
+  // var editButton = document.getElementById("edit-button");
+  // if (saveButton.style.display === "none") {
+  //     saveButton.style.display = "block";
+  //     editButton.style.display = "none";
+  // } else{
+  //     saveButton.style.display = "none";
+  //     editButton.style.display = "block";
+  // }
+
+  var todo = document.getElementById("todo");
+  var taskName = document.getElementById("task-name").value;
+  todo.innerHTML += `
+  <div class="task" id="${taskName.toLowerCase().split(" ").join("")}" draggable="true" ondragstart="drag(event)">
+      <span>${taskName}</span>
+  </div>
+  `
+}
+
+function editTask(){
+  var saveButton = document.getElementById("save-button");
+  var editButton = document.getElementById("edit-button");
+  if (saveButton.style.display === "none") {
+      saveButton.style.display = "block";
+      editButton.style.display = "none";
+  } else{
+      saveButton.style.display = "none";
+      editButton.style.display = "block";
+  }
+}
+
+
+
+document.addEventListener('DOMContentLoaded', (event) => {
+
+  var dragSrcEl = null;
+  
+  function handleDragStart(e) {
+    this.style.opacity = '0.1';
+    this.style.border = '3px dashed #c4cad3';
+    
+    dragSrcEl = this;
+
+    e.dataTransfer.effectAllowed = 'move';
+    e.dataTransfer.setData('text/html', this.innerHTML);
+  }
+
+  function handleDragOver(e) {
+    if (e.preventDefault) {
+      e.preventDefault();
+    }
+
+    e.dataTransfer.dropEffect = 'move';
+    
+    return false;
+  }
+
+  function handleDragEnter(e) {
+    this.classList.add('task-hover');
+  }
+
+  function handleDragLeave(e) {
+    this.classList.remove('task-hover');
+  }
+
+  function handleDrop(e) {
+    if (e.stopPropagation) {
+      e.stopPropagation(); // stops the browser from redirecting.
+    }
+    
+    if (dragSrcEl != this) {
+      dragSrcEl.innerHTML = this.innerHTML;
+      this.innerHTML = e.dataTransfer.getData('text/html');
+    }
+    
+    return false;
+  }
+
+  function handleDragEnd(e) {
+    this.style.opacity = '1';
+    this.style.border = 0;
+    
+    items.forEach(function (item) {
+      item.classList.remove('task-hover');
+    });
+  }
+  
+  
+  let items = document.querySelectorAll('.task'); 
+  items.forEach(function(item) {
+    item.addEventListener('dragstart', handleDragStart, false);
+    item.addEventListener('dragenter', handleDragEnter, false);
+    item.addEventListener('dragover', handleDragOver, false);
+    item.addEventListener('dragleave', handleDragLeave, false);
+    item.addEventListener('drop', handleDrop, false);
+    item.addEventListener('dragend', handleDragEnd, false);
+  });
+});

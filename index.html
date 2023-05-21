@@ -1,200 +1,123 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="">
 
 <head>
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Document</title>
-	<link rel="stylesheet" href="./assets/css/style.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./assets/css/style.css">
+
 </head>
 
 <body>
-
-
-	<button class="btn btn-warning" ng-click="launch('create')">Custom Dialog</button>
+	<header class="header">
+		<h1>My Website</h1>
+		<button class="header-button">Click Me</button>
+	</header>
+	<div class="title">
+		<h1>Product Design Team</h1>
+		<!-- <button class="header-button">Spring 9</button> -->
+		
+	<form action="#" method="post" enctype="multipart/form-data">
+		<label for="name">Ad:</label>
+		<input type="text" id="name" name="name" required><br><br>
+		
+		<label for="photo">Foto:</label>
+		<input type="file" id="photo" name="photo" accept="image/*" required><br><br>
+		
+		<input type="submit" value="Yüklə" onclick="uploadMember(event)">
+	  </form>
+	  
+	  <div id="imagePreview"></div>
+	  
+  
 	</div>
+	<!-- <button class="newitem">New item</button> -->
+	<input type="text" id="searchInput"  placeholder="Axtarış..." >
+
+
+	<ul id="taskList">
+	  <li>Task 1</li>
+	  <li>Task 2</li>
+	  <li>Task 3</li>
+	  <li>Task 4</li>
+	</ul>
+	
+
+  
+	<div class="container">
+		<div class="kanban-heading">
+			<strong class="kanban-heading-text">Team Design</strong>
+		</div>
+		<div class="kanban-board">
+			<div class="kanban-block" id="todo" ondrop="drop(event)" ondragover="allowDrop(event)">
+				<strong>To Do</strong>
+				<div class="task-button-block">
+					<button id="task-button" onclick="createTask()">Create new task</span>
+				</div>
+				<div class="task" id="task1" draggable="true" ondragstart="drag(event)">
+					<span>Task 1</span>
+				</div>
+				<div class="task" id="task2" draggable="true" ondragstart="drag(event)">
+					<span>Task 2</span>
+				</div>
+				<div class="task" id="task3" draggable="true" ondragstart="drag(event)">
+					<span>Task 3</span>
+				</div>
+				<div class="task" id="task4" draggable="true" ondragstart="drag(event)">
+					<span>Task 4</span>
+				</div>
+				<div class="task" id="task5" draggable="true" ondragstart="drag(event)">
+					<span>Task 5</span>
+				</div>
+				<div class="task" id="task6" draggable="true" ondragstart="drag(event)">
+					<span>Task 6</span>
+				</div>
+			</div>
+			<div class="kanban-block" id="inprogress" ondrop="drop(event)" ondragover="allowDrop(event)">
+				<strong>In Progress</strong>
+			</div>
+			<div class="kanban-block" id="done" ondrop="drop(event)" ondragover="allowDrop(event)">
+				<strong>Done</strong>
+			</div>
+			<div class="create-new-task-block" id="create-new-task-block">
+				<strong>New Task</strong>
+				<span class="form-row">
+					<label class="form-row-label" for="task-name">Task</label>
+					<input class="form-row-input" type="text" name="task-name" id="task-name">
+				</span>
+				<span class="form-row">
+					<label class="form-row-label" for="task-name">Description</label>
+					<textarea class="form-row-input" name="task-description" id="task-description" cols="70"
+						rows="10"></textarea>
+				</span>
+				<span class="form-row">
+					<label class="form-row-label" for="task-name">Status</label>
+					<select class="form-row-input" name="task-status" id="task-status">
+						<option value="todo">To Do</option>
+						<option value="inprogress">In Progress</option>
+						<option value="done">Done</option>
+					</select>
+				</span>
+				<span class="form-row-buttons">
+					<button id="edit-button" onclick="editTask()">Edit</span>
+				<button id="save-button" onclick="saveTask()">Save</span>
+					<button id="cancel-button" onclick="createTask()">Cancel</span>
+						</span>
+			</div>
+		</div>
 	</div>
-	<br />
-	<div class="row">
-		<div class="col-md-12">
-			<p>
+ 
 
 
-			<header class="masthead">
+	<script src="./assets/js/index.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/js/all.min.js"></script>
 
-				<div class="boards-menu">
-
-
-
-					<div class="board-search">
-						<input type="search" class="board-search-input" aria-label="Board Search">
-						<i class="fas fa-search search-icon" aria-hidden="true"></i>
-					</div>
-
-				</div>
-
-				<div class="logo">
-
-
-
-				</div>
-
-				<div class="user-settings">
-
-					<button class="user-settings-btn btn" aria-label="Create">
-						<i class="fas fa-plus" aria-hidden="true"></i>
-					</button>
-
-				</div>
-
-			</header>
-
-			<section class="board-info-bar">
-
-				<div class="board-controls">
-
-					<button class="board-title btn">
-						<h2></h2>
-					</button>
-
-				</div>
-
-
-
-			</section>
-
-			<section class="lists-container">
-
-				<div class="list">
-
-					<h3 class="list-title">Tasks to Do</h3>
-
-					<ul class="list-items">
-						<li>Complete mock-up for client website</li>
-						<li>Email mock-up to client for feedback</li>
-						<li>Update personal website header background image</li>
-						<li>Update personal website heading fonts</li>
-						<li>Add google map to personal website</li>
-						<li>Begin draft of CSS Grid article</li>
-
-					</ul>
-
-					<button class="add-card-btn btn">Add a card</button>
-
-				</div>
-
-				<div class="list">
-
-					<h3 class="list-title">Completed Tasks</h3>
-
-					<ul class="list-items">
-						<li>Clear email inbox</li>
-						<li>Finalise requirements for client web design</li>
-						<li>Begin work on mock-up for client website</li>
-					</ul>
-
-					<button class="add-card-btn btn">Add a card</button>
-
-				</div>
-
-				<div class="list">
-
-					<h3 class="list-title">Topics/Concepts to Revise</h3>
-
-					<ul class="list-items">
-						<li>HTML Elements</li>
-						<li>HTML Form Validation</li>
-						<li>HTML Structured Data</li>
-						<li>Advanced CSS Selectors</li>
-						<li>CSS Transforms</li>
-						<li>CSS Animations</li>
-						<li>CSS Flexbox</li>
-						<li>CSS Grid</li>
-						<li>CSS Methodologies (BEM, SMACSS etc.)</li>
-						<li>SASS/SCSS</li>
-						<li>Layout Fallbacks</li>
-
-					</ul>
-
-					<button class="add-card-btn btn">Add a card</button>
-
-				</div>
-
-				<div class="list">
-
-					<h3 class="list-title">Topics/Concepts to Learn</h3>
-
-					<ul class="list-items">
-						<li>HTML 5.2 New Features</li>
-						<li>Responsive Images (picture element, srcset/sizes etc.)</li>
-						<li>Serverless</li>
-						<li>Variable Fonts</li>
-						<li>Shadow DOM</li>
-						<li>ES6+</li>
-						<li>JSON & AJAX</li>
-						<li>API's</li>
-						<li>JavaScript Patterns</li>
-						<li>JavaScript Testing</li>
-
-					</ul>
-
-					<button class="add-card-btn btn">Add a card</button>
-
-				</div>
-
-				<div class="list">
-
-					<h3 class="list-title">Useful Websites for Learning</h3>
-
-					<ul class="list-items">
-						<li>Code Academy</li>
-						<li>CodePen</li>
-						<li>Codrops</li>
-						<li>CSS-Tricks</li>
-						<li>Free Code Camp</li>
-						<li>Khan Academy</li>
-						<li>Lynda</li>
-						<li>Medium</li>
-						<li>Mozilla Developer Network</li>
-						<li>Stack Overflow</li>
-						<li>Team Treehouse</li>
-						<li>Tuts Plus</li>
-						<li>Udemy</li>
-						<li>WPSessions</li>
-						<li>YouTube</li>
-					</ul>
-
-					<button class="add-card-btn btn">Add a card</button>
-
-				</div>
-
-				<div class="list">
-
-					<h3 class="list-title">Web Dev YouTube Channels</h3>
-
-					<ul class="list-items">
-						<li>Adam Khoury</li>
-						<li>Brad Hussey</li>
-						<li>CSS-Tricks (Chris Coyier)</li>
-						<li>Derek Banas</li>
-						<li>DevTips (Travis Neilson)</li>
-						<li>Free Code Camp</li>
-						<li>Fun Fun Function (Mattias Petter Johansson)</li>
-
-					</ul>
-
-					<button class="add-card-btn btn">Add a card</button>
-
-				</div>
-
-			
-
-			
-
-			</section>
-
-			<script src="./assets/js/index.js"></script>
 </body>
 
 </html>
